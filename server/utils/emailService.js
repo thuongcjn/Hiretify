@@ -1,35 +1,38 @@
-const nodemailer = require('nodemailer');
-
 const sendEmail = async (options) => {
-  // Create transporter
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
-
-  // Define message
-  const message = {
-    from: process.env.EMAIL_FROM,
-    to: options.email,
-    subject: options.subject,
-    html: options.html,
-  };
-
-  // Send email
+  const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
+  
   try {
-    console.log(`Attempting to send email to: ${options.email} via ${process.env.SMTP_HOST}`);
-    const info = await transporter.sendMail(message);
-    console.log('✅ Email sent successfully: %s', info.messageId);
-    return info;
-  } catch (error) {
-    console.error('❌ Email Error Detail:', error.message);
-    if (process.env.SMTP_USER === 'your-email@gmail.com') {
-      console.warn('⚠️ WARNING: You are still using placeholder email in .env');
+    console.log(`🚀 Attempting to send email via Brevo API to: ${options.email}`);
+    
+    const response = await fetch(BREVO_API_URL, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': process.env.BREVO_API_KEY,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { 
+          name: "Hiretify Platform", 
+          email: process.env.EMAIL_FROM 
+        },
+        to: [{ email: options.email }],
+        subject: options.subject,
+        htmlContent: options.html,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('✅ Email sent successfully via Brevo API:', data.messageId);
+      return data;
+    } else {
+      console.error('❌ Brevo API Error Detail:', JSON.stringify(data));
+      return null;
     }
+  } catch (error) {
+    console.error('❌ Network Error (Brevo API):', error.message);
     return null;
   }
 };
@@ -93,6 +96,7 @@ const sendStatusUpdateEmail = async (candidateEmail, candidateName, jobTitle, st
 };
 
 module.exports = {
+  sendEmail,
   sendNewApplicationEmail,
   sendStatusUpdateEmail
 };
