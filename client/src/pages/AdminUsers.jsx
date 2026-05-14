@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { getUsers, toggleBlockUser } from '@/api/adminApi';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  Loader2, Search, Filter, Ban, CheckCircle, 
+import {
+  Loader2, Search, Filter, Ban, CheckCircle,
   Mail, Calendar, Briefcase, User as UserIcon,
   ShieldCheck, MoreVertical, ShieldAlert
 } from 'lucide-react';
@@ -60,7 +60,7 @@ const AdminUsers = () => {
     }
   };
 
-  const filteredUsers = users.filter(user => 
+  const filteredUsers = users.filter(user =>
     user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -80,15 +80,15 @@ const AdminUsers = () => {
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-2 border border-blue-100">
               <UserIcon className="h-3 w-3 mr-2" /> Quản lý người dùng
             </div>
-            <h1 className="text-4xl font-black text-black tracking-tighter">Danh bạ</h1>
+            <h1 className="text-4xl font-black text-black tracking-tighter">Danh sách người dùng</h1>
             <p className="text-gray-500 font-medium">Quản lý tài khoản, vai trò và quyền truy cập.</p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
             <div className="relative w-full sm:w-80 group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 group-focus-within:text-black transition-colors" />
-              <Input 
-                placeholder="Tìm kiếm theo tên hoặc email..." 
+              <Input
+                placeholder="Tìm kiếm theo tên hoặc email..."
                 className="pl-12 h-12 rounded-2xl border-none shadow-sm shadow-gray-200/50 bg-white focus-visible:ring-black font-medium"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -128,16 +128,16 @@ const AdminUsers = () => {
                       </div>
                     </TableCell>
                     <TableCell className="py-6">
-                      <Badge 
-                        variant="secondary" 
+                      <Badge
+                        variant="secondary"
                         className={`rounded-full px-3 py-0.5 text-[10px] font-black uppercase tracking-widest border-none
-                          ${user.role === 'admin' ? 'bg-red-50 text-red-600' : 
-                            user.role === 'recruiter' ? 'bg-purple-50 text-purple-600' : 
-                            'bg-blue-50 text-blue-600'}`}
+                          ${user.role === 'admin' ? 'bg-red-50 text-red-600' :
+                            user.role === 'recruiter' ? 'bg-purple-50 text-purple-600' :
+                              'bg-blue-50 text-blue-600'}`}
                       >
-                        {user.role === 'admin' ? 'Quản trị viên' : 
-                          user.role === 'recruiter' ? 'Nhà tuyển dụng' : 
-                          'Ứng viên'}
+                        {user.role === 'admin' ? 'Quản trị viên' :
+                          user.role === 'recruiter' ? 'Nhà tuyển dụng' :
+                            'Ứng viên'}
                       </Badge>
                     </TableCell>
                     <TableCell className="py-6">
@@ -154,9 +154,9 @@ const AdminUsers = () => {
                     <TableCell className="py-6 pr-8 text-right">
                       {user.role !== 'admin' && (
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
+                          <Button
+                            variant="ghost"
+                            size="icon"
                             className={`rounded-xl h-10 w-10 ${user.isBlocked ? 'text-green-600 hover:bg-green-50' : 'text-red-600 hover:bg-red-50'}`}
                             onClick={() => handleToggleBlock(user._id)}
                             disabled={processingId === user._id}
@@ -169,7 +169,7 @@ const AdminUsers = () => {
                               <Ban className="h-4 w-4" />
                             )}
                           </Button>
-                          
+
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="icon" className="rounded-xl h-10 w-10 text-gray-400">
@@ -186,7 +186,7 @@ const AdminUsers = () => {
                                 <Calendar className="mr-2 h-4 w-4" /> Xem hoạt động
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem 
+                              <DropdownMenuItem
                                 className={`rounded-xl py-2.5 font-black text-xs cursor-pointer ${user.isBlocked ? 'text-green-600' : 'text-red-600'}`}
                                 onClick={() => handleToggleBlock(user._id)}
                               >
@@ -208,7 +208,7 @@ const AdminUsers = () => {
                 ))}
               </TableBody>
             </Table>
-            
+
             {filteredUsers.length === 0 && (
               <div className="p-20 text-center space-y-4">
                 <div className="h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center mx-auto text-gray-300">
