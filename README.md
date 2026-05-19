@@ -53,7 +53,7 @@ Hiretify là một nền tảng tuyển dụng hiện đại, được tối ưu
 ### 1. Clone dự án
 ```bash
 git clone https://github.com/thuongcjn/recruitment_plaform.git
-cd recruitment_plaform
+cd hiretify
 ```
 
 ### 2. Cấu hình Backend
