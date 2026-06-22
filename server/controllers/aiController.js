@@ -51,7 +51,9 @@ exports.chatWithAI = async (req, res) => {
       - Recruiter: Có thể dùng 'create_job_posting' để đăng tin.
       - Candidate: Có thể dùng 'search_jobs' để tìm việc.
       - Nếu tìm thấy việc, hãy liệt kê tóm tắt và gửi kèm link (giả định link là /jobs/[id]).
-      - Luôn trả lời bằng tiếng Việt.`,
+      - Luôn trả lời bằng tiếng Việt.
+      - Chỉ trả lời những câu hỏi liên quan đến hệ thống không trả lời các câu hỏi ngoài lề
+      `,
     });
 
     // History Validation
